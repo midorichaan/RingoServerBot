@@ -15,7 +15,7 @@ class cmds(commands.Cog):
     #auth embed
     @commands.command()
     @commands.is_owner()
-    async def authembed(self, ctx, channel:commands.ChannelConverter=None):
+    async def authembed(self, ctx, channel:commands.TextChannelConverter=None):
         msg = await ctx.send("> 処理中...")
         
         if not channel:
