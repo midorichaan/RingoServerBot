@@ -26,7 +26,8 @@ class cmds(commands.Cog):
             
         e = discord.Embed(title="Ringo Server Authentication", description=f"{self.rule_ch.mention} に同意する場合はリアクションをクリックしてください。", color=ctx.guild.me.color)
         
-        await channel.send(embed=e)
+        m = await channel.send(embed=e)
+        await m.add_reaction("✅")
         
         return await msg.edit(content=f"{channel.mention} に認証Embedを送信しました。")
     
@@ -34,7 +35,8 @@ class cmds(commands.Cog):
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
         if payload.message_id == self.bot.config.AUTHEMBED:
-            if payload.emoji == "✅":
+            if str(payload.emoji) == "✅":
+                print("[System] Role added.")
                 await payload.member.add_roles(discord.utils.get(ctx.guild.roles, name="Checked"), reason="[System] Authentication first.")
     
     #auth
@@ -44,10 +46,10 @@ class cmds(commands.Cog):
         check_role =  discord.utils.get(ctx.guild.roles, name="Checked")
         
         if auth_role in ctx.author.roles:
-            return await msg.edit(content="> すでに認証されています。")
+            return await ctx.send("> すでに認証されています。")
         
         if check_role in ctx.author.roles:
-            return await msg.edit(content="> すでに第一段階の認証が完了しています。")
+            return await ctx.send("> すでに第一段階の認証が完了しています。")
         
         await ctx.author.add_roles(auth_role, reason="[System] Authentication complete.")
 
@@ -70,14 +72,14 @@ class cmds(commands.Cog):
         try:
             exec(txt)
             rtn = await eval("evdf(ctx,self.bot)")
-            await ctx.message.add_reaction(":white_check_mark:")
+            await ctx.message.add_reaction("✅")
             if rtn:
                 if isinstance(rtn,discord.Embed):
                     await ctx.send(embed=rtn)
                 else:
                     await ctx.send(f"{rtn}")
         except:
-            await ctx.message.add_reaction(":x:")
+            await ctx.message.add_reaction("❌")
             await ctx.send(embed=discord.Embed(title="Eval Command Error",description=f"py\n{traceback.format_exc(3)}\n", color=0x2ecc71))
     
     #stop
