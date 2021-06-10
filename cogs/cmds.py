@@ -37,7 +37,7 @@ class cmds(commands.Cog):
         if payload.message_id == self.bot.config.AUTHEMBED:
             if str(payload.emoji) == "✅":
                 print("[System] Role added.")
-                await payload.member.add_roles(discord.utils.get(ctx.guild.roles, name="Checked"), reason="[System] Authentication first.")
+                await payload.member.add_roles(discord.utils.get(self.bot.get_guild(payload.guild_id).roles, name="Checked"), reason="[System] Authentication first.")
     
     #auth
     @commands.command()
