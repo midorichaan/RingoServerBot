@@ -5,7 +5,7 @@ import traceback
 
 import config
 
-bot = commands.Bot(command_prefix=config.PREFIX)
+bot = commands.Bot(command_prefix=config.PREFIX, intents=discord.Intents.all())
 bot.config = config
 bot.cmdlog = True
 bot.http.token = config.TOKEN
