@@ -61,11 +61,11 @@ class cmds(commands.Cog):
             return await ctx.send("> 評価するコードを入力してください。")
     
         rt = "\n"
-        if cmd.startswith("py"):
+        if cmd.startswith("```py"):
             cmd = cmd[5:-3]
-        elif cmd.startswith(""):
+        elif cmd.startswith("```"):
             cmd = cmd[3:-3]
-        elif cmd.startswith("python"):
+        elif cmd.startswith("```python"):
             cmd = cmd[9:-3]
             
         txt = f'async def evdf(ctx,bot):{rt}{rt.join([f" {i}" for i in cmd.split(rt)])}' 
