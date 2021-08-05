@@ -48,9 +48,6 @@ class cmds(commands.Cog):
         if auth_role in ctx.author.roles:
             return await ctx.send("> すでに認証されています。")
         
-        if check_role in ctx.author.roles:
-            return await ctx.send("> すでに第一段階の認証が完了しています。")
-        
         await ctx.author.add_roles(auth_role, reason="[System] Authentication complete.")
 
     #eval
